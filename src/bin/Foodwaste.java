@@ -1,6 +1,6 @@
 package bin;
 
-import Data.Data;
+import Utils.Data;
 
 import java.awt.image.BufferedImage;
 

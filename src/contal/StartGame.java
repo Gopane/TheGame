@@ -1,12 +1,16 @@
 package contal;
 
 import Manage.UserQu_imp;
+import Utils.Music;
 import bin.User;
+import javafx.scene.media.AudioClip;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileInputStream;
 
 
 public class StartGame extends JPanel  implements ActionListener{
@@ -16,6 +20,7 @@ public class StartGame extends JPanel  implements ActionListener{
     private JTextField jt;
     private Image icon = new ImageIcon("src/Image/material/cat2.png").getImage();
     private Image back =new ImageIcon("src/Image/material/bc2.png").getImage();
+    private static GameJFrame st ;
 
     public StartGame() {
         this.setSize(640,480);
@@ -69,6 +74,7 @@ public class StartGame extends JPanel  implements ActionListener{
         jf.add(exit);
 
         start.addActionListener(this);
+        keep.addActionListener(this);
         exit.addActionListener(this);
         jf.add(this);
         jf.setVisible(true);
@@ -94,7 +100,7 @@ public class StartGame extends JPanel  implements ActionListener{
             System.out.println(u.ischar(user.getName()));
             jf.dispose();
             //建立游戏窗口
-            GameJFrame st = null;
+             st = null;
             try {
                 st = new GameJFrame();
             } catch (Exception ex) {
@@ -109,10 +115,14 @@ public class StartGame extends JPanel  implements ActionListener{
         }
     }
 
-//asdas
-
     public static void main(String[] args) {
-        new StartGame();
+        StartGame at =new StartGame();
+        Music.playMusic();
+    }
+
+    //返回生成的GameJFrame，使其关闭
+    public static GameJFrame getJFrame(){
+        return st;
     }
 
 }
