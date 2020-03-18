@@ -24,10 +24,15 @@ public class GameJPanle extends JPanel implements ActionListener {
     BufferedImage click,boom1,boom2;
     private JButton battle,return1;
     int a;
-    CheckpointJPanle cp;
+    static CheckpointJPanle  cp;
 
+
+    JButton sd ;
+    Timer timer =new Timer(10,this);
     public GameJPanle(){
         setBackground(new Color(143,188,143));
+        setLayout(null);
+        setJButton();
         //获取路径
         setIamge();
         rec = new Receycle();
@@ -36,9 +41,16 @@ public class GameJPanle extends JPanel implements ActionListener {
         har = new Harmful();
         a = 300;
         movecloud();
-        setJButton();
+
+        this.add(battle);
+        this.add(return1);
         battle.addActionListener(this);
         return1.addActionListener(this);
+
+    }
+
+    public static CheckpointJPanle getCp() {
+        return cp;
     }
 
     //初始化图片
@@ -52,10 +64,10 @@ public class GameJPanle extends JPanel implements ActionListener {
     }
 
     @Override
-    public void paint(Graphics g) {
-        super.paint(g);
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
         //画循环垃圾箱,坐标，宽高
-        g.drawImage(background,0,0,1200,500,null);
+        g.drawImage(background,0,0,1200,500,this);
         g.drawImage(rec.getImage(),rec.getX(),rec.getY(),rec.getW(),rec.getH(),null);
         g.drawImage(fd.getImage(),fd.getX(),fd.getY(),fd.getW(),fd.getH(),null);
         g.drawImage(other.getImage(),other.getX(),other.getY(),other.getW(),other.getH(),null);
@@ -69,9 +81,9 @@ public class GameJPanle extends JPanel implements ActionListener {
 
         g.drawString("自练",325,180);
         g.drawString("对战",625,180);
+
         battle.repaint();
         return1.repaint();
-        repaint();
 
     }
 
@@ -97,23 +109,13 @@ public class GameJPanle extends JPanel implements ActionListener {
         }.start();
     }
 
-    //添加组件，可以写成一个类
-    public JButton getJButton(){
-        return battle;
-    }
-
-    //添加组件，可以写成一个类
-    public JButton getJButtonre(){
-        return return1;
-    }
-
     //设置面板的按钮
     public void setJButton(){
 
                 battle = new JButton();
                 ImageIcon im = new ImageIcon("src/Image/material/click.png");
                 battle.setContentAreaFilled(false);//消除背景
-                //battle.setFocusPainted(false);//消除选择
+                battle.setFocusPainted(false);//消除选择
                 battle.setBorderPainted(false);//消除边框
                 battle.setBounds(300,250,100,40);
                 Image it = im.getImage().getScaledInstance(battle.getWidth() + 70, battle.getHeight() + 140, im.getImage().SCALE_DEFAULT);
@@ -129,7 +131,7 @@ public class GameJPanle extends JPanel implements ActionListener {
                 Image it1 = im1.getImage().getScaledInstance(return1.getWidth(), return1.getHeight(), im1.getImage().SCALE_DEFAULT);
                 im1 =new ImageIcon(it1);
                 return1.setIcon(im1);
-
+                battle.repaint();
     }
 
    //监听器。监听按钮
@@ -143,16 +145,11 @@ public class GameJPanle extends JPanel implements ActionListener {
             System.out.println("返回到菜单栏");
         }
         if(e.getSource()==battle){
-            StartGame.getJFrame().remove(StartGame.getJFrame().getGp().getJButtonre());
-            StartGame.getJFrame().remove(StartGame.getJFrame().getGp().getJButton());
-            StartGame.getJFrame().remove(StartGame.getJFrame().getGp());
-
-            StartGame.getJFrame().getGp().repaint();
-            StartGame.getJFrame().getGp().getJButtonre().repaint();
-            StartGame.getJFrame().getGp().getJButton().repaint();
-            StartGame.getJFrame().setSize(1001,500);
+            StartGame.getJFrame().getGp().setVisible(false);
             cp = new CheckpointJPanle();
             StartGame.getJFrame().add(cp);
+            cp.setVisible(true);
         }
+        this.repaint();
     }
 }

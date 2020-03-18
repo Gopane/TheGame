@@ -81,15 +81,15 @@ public class StartGame extends JPanel  implements ActionListener{
     }
 
     @Override
-    public void paint(Graphics g) {
-        super.paint(g);
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
         g.drawImage(back,150,-35,320,480,this);
 
         jl.repaint();
         jl2.repaint();
         start.repaint();
         keep.repaint();
-        exit.repaint();
+        //exit.repaint();
     }
 
     @Override
